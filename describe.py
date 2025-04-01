@@ -37,6 +37,7 @@ def percentile(data, col_index, percent):
 	d1 = values[c] * (k - f)
 	return d0 + d1
 
+
 def print_data():
 	#todo find another way to do this bc this is ugly
 
@@ -81,9 +82,6 @@ def print_data():
 	df = pd.DataFrame(data, index=columns)
 	df2 = pd.DataFrame(data2, index=columns2)
 	df3 = pd.DataFrame(data3, index=columns3)
-	# df = pd.DataFrame(data).transpose()
-	# df2 = pd.DataFrame(data2).transpose()
-	# df3 = pd.DataFrame(data3).transpose()
 	df = df.transpose()
 	df2 = df2.transpose()
 	df3 = df3.transpose()
@@ -91,6 +89,7 @@ def print_data():
 	print(df, '\n')
 	print(df2, '\n')
 	print(df3)
+	print(len(ravenclaw), len(gryffindor), len(hufflepuff), len(slytherin))
 
 
 if __name__ == '__main__':
