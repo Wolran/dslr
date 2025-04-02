@@ -13,23 +13,25 @@ course = "Arithmancy,Astronomy,Herbology,Defense Against the Dark Arts,Divinatio
 
 
 def hist_print_data(house, index, colors, name, reset, path, show_legend=True):
-
-	data = [float(row[index]) for row in house if row[index].strip()]
-
-	# Creation de l'histogramme
+    data = [float(row[index]) for row in house if row[index].strip()]
+    
+    # normalisation des notes
+    if data:
+        data = [(x - min(data)) / (max(data) - min(data)) for x in data]
+    
+    # Creation de l'histogramme
 	# data : notes des eleves
 	# bins=50 : nombre d'intervalles pour regrouper les notes
-	plt.hist(data, bins=50, color=colors, label=name)
+    plt.hist(data, bins=50, density=True, color=colors, label=name, alpha=0.8)
+    
+    plt.xlabel(f"Notes pour {course[index-6]}")
+    plt.ylabel("Densité")
+    if show_legend:
+        plt.legend()
 
-	plt.xlabel("note")
-	plt.ylabel("frequency")
-	# plt.title(path)
-	if show_legend:
-		plt.legend()
-
-	if reset == 1:
-		plt.savefig(f"./graph/hist/{path}.png")
-		plt.clf()
+    if reset == 1:
+        plt.savefig(f"./graph/hist/{path}.png")
+        plt.clf()
 
 
 def calculate_homogeneity(houses_data):
@@ -75,10 +77,9 @@ if __name__ == '__main__':
             most_homogeneous = i
 
     # creer l'histogramme pour la matiere la plus homogene
+    plt.figure(figsize=(10, 6))
     hist_print_data(ravenclaw, most_homogeneous, 'blue', "ravenclaw", 0, "most_homogeneous")
     hist_print_data(gryffindor, most_homogeneous, 'red', "gryffindor", 0, "most_homogeneous")
     hist_print_data(hufflepuff, most_homogeneous, 'yellow', "hufflepuff", 0, "most_homogeneous")
     hist_print_data(slytherin, most_homogeneous, 'green', "slytherin", 1, "most_homogeneous")
-
-    print(f"Le cours avec la distribution la plus homogène est : {course[most_homogeneous-6]}")
 
